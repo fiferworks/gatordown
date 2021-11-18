@@ -1,0 +1,22 @@
+<!-- We don't want to number our chapters anymore. -->
+\docBodyfalse
+\setcounter{secnumdepth}{-1}
+
+<!-- un-silence the following lines if you aren't just importing a publication
+like I was -->
+
+<!-- `r if(knitr:::is_latex_output()) '\\appendix'` -->
+
+<!-- `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`  -->
+
+
+<!-- This is a way to include a pdf publication, you need the -3 cm offset to
+avoid overlapping the chapter heading-->
+\includepdf[pages=1,pagecommand=\chapter{APPENDIX}, offset=0 -3cm]{figure/exampleMasterfile.pdf}
+
+<!-- I needed to move the page numbers a little lower for my publication to
+avoid overlapping the text at the bottom of the pdf, you may not need this -->
+\setlength{\footskip}{4.2em}
+
+<!-- This imports the second to the last pages of the pdf -->
+\includepdf[pages={2-last}, pagecommand={\thispagestyle{plain}}, fitpaper = true]{figure/exampleMasterfile.pdf}
