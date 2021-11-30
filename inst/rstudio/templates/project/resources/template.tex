@@ -16,105 +16,32 @@
 % Commenting also removes a line from the document;
 % very handy for troubleshooting problems. -BTS
 
-% As far as I know, this follows the requirements laid out in
-% the 2002-2003 Senior Handbook. Ask a librarian to check the
-% document before binding. -SN
 
-%%
-%% Preamble
-%%
+%%%%%%%%%%%%%%
+%% Preamble %%
+%%%%%%%%%%%%%%
 % \documentclass{<something>} must begin each LaTeX document
-\documentclass[12pt,twoside]{reedthesis}
-% Packages are extensions to the basic LaTeX functions. Whatever you
-% want to typeset, there is probably a package out there for it.
-% Chemistry (chemtex), screenplays, you name it.
-% Check out CTAN to see: https://www.ctan.org/
+\documentclass{ufdissertation}[overrideChapters] %UF's 2019 Template --ANF
+%Packages are extensions to the basic LaTeX functions. Whatever you want to
+%typeset, there is probably a package out there for it. Chemistry (chemtex),
+%screenplays, you name it. Check out CTAN to see: https://www.ctan.org/ Also,
+%Rmarkdown can read LaTex commands in Rmd files, so long as the output is a pdf,
+%because pdfs are rendered by Rmarkdown via LaTex
 %%
-\usepackage{graphicx,latexsym}
-\usepackage{amsmath}
-\usepackage{amssymb,amsthm}
-\usepackage{longtable,booktabs,setspace}
-\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
-\usepackage[hyphens]{url}
-% Added by CII
-\usepackage{hyperref}
-\usepackage{lmodern}
-\usepackage{float}
-\floatplacement{figure}{H}
-% Thanks, @Xyv
+\usepackage{siunitx}
+\usepackage[artemisia]{textgreek}
+% \usepackage[section]{placeins}
+\usepackage{pdfpages}
 \usepackage{calc}
-% End of CII addition
 \usepackage{rotating}
-
-% Next line commented out by CII
-%%% \usepackage{natbib}
-% Comment out the natbib line above and uncomment the following two lines to use the new
-% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
-% bibliography is included.
-%\usepackage{biblatex-chicago}
-%\bibliography{thesis}
-
-
-% Added by CII (Thanks, Hadley!)
-% Use ref for internal links
-\renewcommand{\hyperref}[2][???]{\autoref{#1}}
-\def\chapterautorefname{Chapter}
-\def\sectionautorefname{Section}
-\def\subsectionautorefname{Subsection}
-% End of CII addition
-
-% Added by CII
-\usepackage{caption}
-\captionsetup{width=5in}
-% End of CII addition
-
-% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
 
 % Syntax highlighting #22
 $if(highlighting-macros)$
   $highlighting-macros$
 $endif$
 
-% To pass between YAML and LaTeX the dollar signs are added by CII
-\title{$title$}
-\author{$author$}
-% The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
-\date{$date$}
-\division{$division$}
-\advisor{$advisor$}
-\institution{$institution$}
-\degree{$degree$}
-%If you have two advisors for some reason, you can use the following
-% Uncommented out by CII
-$if(altadvisor)$
-\altadvisor{$altadvisor$}
-$endif$
-% End of CII addition
-
-%%% Remember to use the correct department!
-\department{$department$}
-% if you're writing a thesis in an interdisciplinary major,
-% uncomment the line below and change the text as appropriate.
-% check the Senior Handbook if unsure.
-%\thedivisionof{The Established Interdisciplinary Committee for}
-% if you want the approval page to say "Approved for the Committee",
-% uncomment the next line
-%\approvedforthe{Committee}
-
-% Added by CII
-%%% Copied from knitr
-%% maxwidth is the original width if it's less than linewidth
-%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
+% So, this code uses your CSL file to decide how to format your citations
+% You may need to edit your CSL if the editorial office doesn't like it
 % From {rticles}
 $if(csl-refs)$
 \newlength{\csllabelwidth}
@@ -146,100 +73,175 @@ $if(csl-refs)$
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 
-\renewcommand{\contentsname}{Table of Contents}
-% End of CII addition
-
-\setlength{\parskip}{0pt}
-
-% Added by CII
-$if(space_between_paragraphs)$
-  %\setlength{\parskip}{\baselineskip}
-  \usepackage[parfill]{parskip}
-$endif$
-
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
-\Acknowledgements{
-$acknowledgements$
-}
-
-\Dedication{
-$dedication$
-}
-
-\Preface{
-$preface$
-}
-
-\Abstract{
-$abstract$
-}
-
-$for(header-includes)$
-	$header-includes$
-$endfor$
+% % Added by CII (Thanks, Hadley!)
+% % Use ref for internal links
+\renewcommand{\hyperref}[2][???]{\autoref{#1}}
+\def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
 % End of CII addition
-%%
-%% End Preamble
-%%
-%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-% Everything below added by CII
-$if(title)$
-  \maketitle
-$endif$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frontmatter % this stuff will be roman-numbered
-\pagestyle{empty} % this removes page numbers from the frontmatter
+\docBodyfalse
 
-$if(acknowledgements)$
-  \begin{acknowledgements}
-    $acknowledgements$
-  \end{acknowledgements}
-$endif$
+\begin{center}
+    \thispagestyle{empty}%
+      \vspace*{-0.4in}\realSingleSpace{$title$}%
+        \vfill%
+        By \\*[\baselineskip]%
+        \MakeUppercase{$author$}%
+        \vfill%
+        A \MakeUppercase{$thesistype$} PRESENTED TO THE GRADUATE SCHOOL \\%
+        OF THE UNIVERSITY OF FLORIDA IN PARTIAL FULFILLMENT \\%
+        OF THE REQUIREMENTS FOR THE DEGREE OF \\%
+        \MakeUppercase{$degree$} \\*[\baselineskip]%
+        UNIVERSITY OF FLORIDA \\*[\baselineskip]%
+        {$year$}%
+\end{center}
 
-$if(preface)$
-  \begin{preface}
-    $preface$
-  \end{preface}
-$endif$
+\newpage
 
-$if(toc)$
-  \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-  \setcounter{secnumdepth}{$toc-depth$}
-  \setcounter{tocdepth}{$toc-depth$}
-  \tableofcontents
-$endif$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COPYRIGHT PAGE                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-$if(lot)$
-  \listoftables
-$endif$
+\newpage
+  \vspace*{\fill}
+    \begin{center}
+        \textcopyright{} {$year$} {$author$}
+    \end{center}
+  \vspace*{\fill}
+\newpage
 
-$if(lof)$
-  \listoffigures
-$endif$
+\setcounter{secnumdepth}{-1}     % We don't want chapter numbers until later,
+                                 % So let's kill off the table of contents depth detector until we want to start counting.
+                                 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEDICATION                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace*{\fill}                   % We want the dedication to be centered,
+                                  % So we use \vspace*{\fill} above and below.
+  \begin{center}                    % We also want to center the dedication horizontally.
+    \realSingleSpace
+    {$dedication$}
+  \end{center}
+
+\vspace*{\fill}                   % Note that the * in \vspace* is necessary,
+                                  % as otherwise latex will ignore it here
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGMENTS               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{$acknowledgments$}              % Inputs the text found in the 00-acknowledgments.Rmd file
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\realSingleSpace
+  \tableofcontents % Table of Contents comes fourth.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF TABLES                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\listoftables  % List of tables comes next, if you have one.
+  \addcontentsline{toc}{chapter}{LIST OF TABLES}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF FIGURES               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\listoffigures % List of figures comes next, if you have one.
+  \addcontentsline{toc}{chapter}{LIST OF FIGURES}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF ABBREVIATIONS         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACADEMIC ABSTRACT             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 $if(abstract)$
-  \begin{abstract}
-    $abstract$
-  \end{abstract}
+\newpage                         % Since the abstract needs to be a phantom chapter, we need to force a newpage.
+    \phantomsection
+    \addcontentsline{toc}{chapter}{ABSTRACT}
+    \label{abstract}
+        \begin{center}\realSingleSpace
+            Abstract of $thesistype$ Presented to the Graduate School \\
+            of the University of Florida in Partial Fulfillment of the \\
+            Requirements for the Degree of $degree$\\[\baselineskip]
+            {$title$}\\[\baselineskip] % reads in your title from the YAML header
+            By\\[\baselineskip]
+            {$author$} \\[\baselineskip]
+            {$month$} {$year$}\\[\baselineskip]
+        \end{center}
+    \realSingleSpace\vspace*{-\baselineskip}
+            \hfill \break
+                \noindent Chair: {$chair$} \\    % If we have a chair recorded, display it.
+                $if(cochair)$
+                \noindent Cochair: {$cochair$} \\% If there is a Co-chair provided, then list it.
+                $endif$
+            \noindent Major: {$major$} \\
+   \hphantom{forcing a space here} \\
+   
+\doublespacing
+{$abstract$}
+
+\addtocontents{toc}{\protect\contentsline{part}{CHAPTER}{}{}}% Input a dummy "CHAPTER" heading to show user-content
+        \setcounter{secnumdepth}{5}
+        \docBodytrue
 $endif$
 
-$if(dedication)$
-  \begin{dedication}
-    $dedication$
-  \end{dedication}
-$endif$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTERS                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mainmatter % here the regular arabic numbering starts
-\pagestyle{fancyplain} % turns page numbering back on
+    {$body$}                       % This imports the body chapters included in the _bookdown.yml file,
+% you can add as many chapters as you need
 
-$body$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDICES                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% If you have multiple appendices, add them as new chapters in the 97-appendix.Rmd file
 
 
-% Index?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF REFERENCES            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% provided by file 98-references.Rmd
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIOGRAPHICAL SKETCH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% provided by file 99-biography.Rmd
+
 
 \end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END DOCUMENT                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
